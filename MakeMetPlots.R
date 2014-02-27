@@ -45,7 +45,7 @@ if(!loaded){
 }
 
 # Open a pdf socket for plot output:
-pdf("MetPlots.pdf", paper="USr")
+#pdf("MetPlots.pdf", paper="USr")
 
 # Load the data:
 master_plus_met <- read.csv("Master_Plus_Met.csv")
@@ -72,15 +72,18 @@ color_list <- c("lightslateblue","green4","maroon3","goldenrod4")
 # Plot pheno-day versus a bunch of met variables:
 relevant_data <- master_plus_met[c(6,7,8,26,29:63)] # BUT WE ALSO NEED YEAR AND SITE ID!!
 
+# Pheno day vs. Latitude
 par(mar=c(5.1,8.1,4.1,2.1))
 plot(relevant_data$Latitude,relevant_data$pheno_day,ylab="Pheno Day",xlab="Latitude")
 
+# Pheno day vs. Latitude (Lat > 25)
 par(mar=c(5.1,8.1,4.1,2.1))
 plot(relevant_data$Latitude[relevant_data$Latitude > 25],
      relevant_data$pheno_day[relevant_data$Latitude > 25],ylab="Pheno Day",xlab="Latitude")
 
 #boxplot(relevant_data$Biome,relevant_data$pheno_day,xlab="Pheno Day",ylab="Latitude")
 
+# Pheno day vs. precip (1-30,31-60, 61-90)
 par(mar=c(5.1,8.1,4.1,2.1))
 plot(relevant_data$Precip_total_1to30days,relevant_data$pheno_day, 
      ylab="Pheno Day",xlab="Precip [mm]",col=color_list[1],pch=20)
@@ -89,6 +92,7 @@ points(relevant_data$Precip_total_61to90days,relevant_data$pheno_day,col=color_l
 legend(x="bottomright",c("1-30 days","31-60 days","61-90 days"),
        col=color_list,pch=20)
 
+# Pheno day vs. Tmin (1-30,31-60,61-90)
 par(mar=c(5.1,8.1,4.1,2.1))
 plot(relevant_data$Tmin_mean_1to30days,relevant_data$pheno_day, 
      ylab="Pheno Day",xlab="mean T_min [C]",col=color_list[1],pch=20)
@@ -98,7 +102,7 @@ legend(x="bottomright",c("1-30 days","31-60 days","61-90 days"),
        col=color_list,pch=20)
 
 
-
+# Pheno day vs. Tmax (1-30,31-60,61-90)
 par(mar=c(5.1,8.1,4.1,2.1))
 plot(relevant_data$Tmax_mean_1to30days,relevant_data$pheno_day, 
      ylab="Pheno Day",xlab="mean T_max [C]",col=color_list[1],pch=20)
@@ -107,6 +111,7 @@ points(relevant_data$Tmax_mean_61to90days,relevant_data$pheno_day,col=color_list
 legend(x="bottomright",c("1-30 days","31-60 days","61-90 days"),
        col=color_list,pch=20)
 
+# Pheno day vs. Tmean (1-30,31-60,61-90)
 par(mar=c(5.1,8.1,4.1,2.1))
 plot(relevant_data$Tmean_1to30days,relevant_data$pheno_day, 
      ylab="Pheno Day",xlab="mean T_mean [C]",col=color_list[1],pch=20)
@@ -269,5 +274,8 @@ legend(x="bottomright",c("LF50","LF80","LF100","LAI0"),
 # Plot pheno-day versus modeled/expected pheno-day from latitude variables.
 # (And determine portion of variance explained by latitude)
 
+## Let's plot Controlled Pheno day versus precip
+# First we'll make some "effects" dataframes -- just the x values times their betas:
+effects_LF50 <- LF50_data_BIC  LF50_model_BIC$
 
 dev.off()
