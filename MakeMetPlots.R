@@ -274,8 +274,30 @@ legend(x="bottomright",c("LF50","LF80","LF100","LAI0"),
 # Plot pheno-day versus modeled/expected pheno-day from latitude variables.
 # (And determine portion of variance explained by latitude)
 
-## Let's plot Controlled Pheno day versus precip
-# First we'll make some "effects" dataframes -- just the x values times their betas:
-effects_LF50 <- LF50_data_BIC  LF50_model_BIC$
+## Let's make some partial regression plots (aka 'added variable plots') and some partial residual plots
+
+loaded <- require("car")
+if(!loaded){
+  print("trying to install package car")
+  install.packages("car")
+  loaded <- require("car")
+  if(loaded){
+    print("car installed and loaded")
+    library(car)
+  } 
+  else {
+    stop("Could not install car You need to figure out how to install that manually before this function will work!")
+  }    
+}
+avPlots(LF50_model_BIC)
+avPlots(LF80_model_BIC)
+avPlots(LF100_model_BIC)
+avPlots(LAI0_model_BIC)
+
+crPlots(LF50_model_BIC)
+crPlots(LF80_model_BIC)
+crPlots(LF100_model_BIC)
+crPlots(LAI0_model_BIC)
+
 
 dev.off()
