@@ -5,7 +5,7 @@
 master_plus_met <- read.csv("Master_Plus_Met.csv")
 
 # For each site in master+met, download the full data record:
-for (SITE in master_plus_met$Met_Station_ID) {
+for (SITE in unique(master_plus_met$Met_Station_ID)) {
   # Determine if GHCN or GSOD:
   
   ## Download all years of data:

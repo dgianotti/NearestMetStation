@@ -69,8 +69,8 @@ Determine_Percent_Data_GHCN <- function(st.id,
   # Throw out everything but Tmax, Tmin, Precip
   ghcn_data_clim = subset(ghcn_data_clim,ghcn_data_clim$ELEMENT == "PRCP" | ghcn_data_clim$ELEMENT == "TMAX" | ghcn_data_clim$ELEMENT == "TMIN")
   
-  first_clim_year <- min(ghcn_data_clim$YEAR,na.rm=TRUE)
-  last_clim_year <- max(ghcn_data_clim$YEAR,na.rm=TRUE)
+  first_clim_year <- as.numeric(min(ghcn_data_clim$YEAR,na.rm=TRUE))
+  last_clim_year <- as.numeric(max(ghcn_data_clim$YEAR,na.rm=TRUE))
     
   # Throw out unnesccesary years
   ghcn_data = subset(ghcn_data_clim, ghcn_data_clim$YEAR >= year.start.pheno & ghcn_data_clim$YEAR <= year.end.pheno )
@@ -82,8 +82,8 @@ Determine_Percent_Data_GHCN <- function(st.id,
                    "VAL18","VAL19","VAL20","VAL21","VAL22","VAL23","VAL24","VAL25",
                    "VAL26","VAL27","VAL28","VAL29","VAL30","VAL31")
   
-  ghcn_data =ghcn_data[,cols_to_keep]
-  ghcn_data_clim =ghcn_data_clim[,cols_to_keep]
+  ghcn_data = ghcn_data[,cols_to_keep]
+  ghcn_data_clim = ghcn_data_clim[,cols_to_keep]
   
   if(nrow(ghcn_data) == 0){
     percent_data = 0
@@ -162,28 +162,28 @@ Determine_Percent_Data_GHCN <- function(st.id,
       
       # Calculate the start index:
       first_date = as.Date(paste(ghcn_data_clim$YEAR[ROW],ghcn_data_clim$MONTH[ROW],"01",sep="-"))
-      start_index = which(formatted_data$Date==first_date)
+      start_index = which(formatted_data_clim$Date==first_date)
       end_index = start_index + length(formatted_data_vec) - 1
       
       if (as.character(ghcn_data_clim$ELEMENT[ROW]) == "PRCP"){ 
-        formatted_data$ppt_mm[start_index:end_index] = formatted_data_vec/10 # unit convertion from tenths of mm
+        formatted_data_clim$ppt_mm[start_index:end_index] = formatted_data_vec/10 # unit convertion from tenths of mm
       }else if(as.character(ghcn_data_clim$ELEMENT[ROW]) == "TMAX"){
-        formatted_data$tmax_C[start_index:end_index] = formatted_data_vec/10 # unit convertion from tenths of deg-C
+        formatted_data_clim$tmax_C[start_index:end_index] = formatted_data_vec/10 # unit convertion from tenths of deg-C
       }else{ #TMIN
-        formatted_data$tmin_C[start_index:end_index] = formatted_data_vec/10 # unit convertion from tenths of deg-C
+        formatted_data_clim$tmin_C[start_index:end_index] = formatted_data_vec/10 # unit convertion from tenths of deg-C
       }
       
     }
     
     # Display some stuff about the climatology:
-    percent_data = nrow(na.omit(formatted_data))/nrow(formatted_data)
+    percent_data = nrow(na.omit(formatted_data_clim))/nrow(formatted_data_clim)
     print(sprintf("Climatology: %i years of climatology data, %1.2f percent complete.",
                   last_clim_year - first_clim_year + 1, percent_data*100))
     
     if (data.type =="point"){
-      write.csv(file = paste("Formatted_Met_Data_Point/",st.id,"_clim.csv",sep=""), formatted_data, row.names=FALSE)
+      write.csv(file = paste("Formatted_Met_Data_Point/",st.id,"_clim.csv",sep=""), formatted_data_clim, row.names=FALSE)
     }else{
-      write.csv(file = paste("Formatted_Met_Data_Slope/",st.id,"_clim.csv",sep=""), formatted_data, row.names=FALSE)
+      write.csv(file = paste("Formatted_Met_Data_Slope/",st.id,"_clim.csv",sep=""), formatted_data_clim, row.names=FALSE)
     }
     
     
