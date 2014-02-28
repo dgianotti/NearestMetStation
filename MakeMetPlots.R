@@ -45,7 +45,7 @@ if(!loaded){
 }
 
 # Open a pdf socket for plot output:
-#pdf("MetPlots.pdf", paper="USr")
+pdf("MetPlots.pdf", paper="USr")
 
 # Load the data:
 master_plus_met <- read.csv("Master_Plus_Met.csv")
@@ -160,7 +160,7 @@ LAI0_model <- lm(pheno_day ~ ., data=LAI0_data)
 
 ## Better fitting:
 # LF50:
-LF50_subsets <- regsubsets(pheno_day ~ ., data=LF50_data[,-2],nbest=1,nvmax=15) 
+LF50_subsets <- regsubsets(pheno_day ~ ., data=LF50_data[,-2],nbest=1,nvmax=3) 
 LF50_summary <- summary(LF50_subsets)
 best_mod_number <- which.min(LF50_summary$bic)
 a <- as.data.frame(LF50_summary$which[best_mod_number,])
@@ -170,7 +170,7 @@ LF50_data_BIC <- LF50_data[columns_to_use]
 LF50_model_BIC <- lm(pheno_day ~ ., LF50_data_BIC)
 
 # LF80:
-LF80_subsets <- regsubsets(pheno_day ~ ., data=LF80_data[,-2],nbest=1,nvmax=15) 
+LF80_subsets <- regsubsets(pheno_day ~ ., data=LF80_data[,-2],nbest=1,nvmax=3) 
 LF80_summary <- summary(LF80_subsets)
 best_mod_number <- which.min(LF80_summary$bic)
 a <- as.data.frame(LF80_summary$which[best_mod_number,])
@@ -180,7 +180,7 @@ LF80_data_BIC <- LF80_data[columns_to_use]
 LF80_model_BIC <- lm(pheno_day ~ ., LF80_data_BIC)
 
 # LF100:
-LF100_subsets <- regsubsets(pheno_day ~ ., data=LF100_data[,-2],nbest=1,nvmax=15) 
+LF100_subsets <- regsubsets(pheno_day ~ ., data=LF100_data[,-2],nbest=1,nvmax=3) 
 LF100_summary <- summary(LF100_subsets)
 best_mod_number <- which.min(LF100_summary$bic)
 a <- as.data.frame(LF100_summary$which[best_mod_number,])
@@ -190,7 +190,7 @@ LF100_data_BIC <- LF100_data[columns_to_use]
 LF100_model_BIC <- lm(pheno_day ~ ., LF100_data_BIC)
 
 # LAI0:
-LAI0_subsets <- regsubsets(pheno_day ~ ., data=LAI0_data[,-2],nbest=1,nvmax=15) 
+LAI0_subsets <- regsubsets(pheno_day ~ ., data=LAI0_data[,-2],nbest=1,nvmax=3) 
 LAI0_summary <- summary(LAI0_subsets)
 best_mod_number <- which.min(LAI0_summary$bic)
 a <- as.data.frame(LAI0_summary$which[best_mod_number,])
