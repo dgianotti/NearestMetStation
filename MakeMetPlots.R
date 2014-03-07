@@ -289,15 +289,15 @@ if(!loaded){
     stop("Could not install car You need to figure out how to install that manually before this function will work!")
   }    
 }
-avPlots(LF50_model_BIC)
-avPlots(LF80_model_BIC)
-avPlots(LF100_model_BIC)
-avPlots(LAI0_model_BIC)
+avPlots(LF50_model_BIC,ask=FALSE)
+avPlots(LF80_model_BIC,ask=FALSE)
+avPlots(LF100_model_BIC,ask=FALSE)
+avPlots(LAI0_model_BIC,ask=FALSE)
 
-crPlots(LF50_model_BIC)
-crPlots(LF80_model_BIC)
-crPlots(LF100_model_BIC)
-crPlots(LAI0_model_BIC)
+crPlots(LF50_model_BIC,ask=FALSE)
+crPlots(LF80_model_BIC,ask=FALSE)
+crPlots(LF100_model_BIC,ask=FALSE)
+crPlots(LAI0_model_BIC,ask=FALSE)
 
 
 dev.off()
